@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nearly/config/app_color.dart';
+import 'package:nearly/config/user_auth.dart';
 import 'package:nearly/login/controller.dart';
 import 'package:nearly/sign_up/sign_up.dart';
 import 'package:nearly/widget/button.dart';
@@ -69,7 +70,13 @@ class _LoginState extends State<Login> {
                 ),
                 button(
                   onTap: () {
-                    if (key.currentState!.validate()) {}
+                    if (key.currentState!.validate()) {
+                      loginAuth(
+                        context,
+                        email: controller.email.value.text,
+                        password: controller.password.value.text,
+                      );
+                    }
                   },
                   tMargin: 25,
                   title: "login",

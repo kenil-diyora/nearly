@@ -5,6 +5,7 @@ Widget textField({
   String? hintText,
   TextEditingController? controller,
   String? Function(String?)? validator,
+  void Function(String)? onChanged,
   double tMargin = 0,
   double lMargin = 0,
   double rMargin = 0,
@@ -34,6 +35,7 @@ Widget textField({
           ),
         ),
         TextFormField(
+          onChanged: onChanged,
           controller: controller,
           validator: validator,
           style: const TextStyle(
@@ -56,11 +58,10 @@ Widget textField({
               ),
             ),
             errorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.red,
-                width: 1,
-              )
-            ),
+                borderSide: BorderSide(
+              color: Colors.red,
+              width: 1,
+            )),
           ),
         ),
       ],

@@ -7,6 +7,7 @@ Widget button({
   double lMargin = 0,
   double rMargin = 0,
   double bMargin = 0,
+  Color? btnColor,
   void Function()? onTap,
 }) {
   return GestureDetector(
@@ -23,7 +24,7 @@ Widget button({
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: ColorConst.green,
+        color: btnColor ?? ColorConst.green,
       ),
       alignment: Alignment.center,
       child: Text(

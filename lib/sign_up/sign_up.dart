@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nearly/config/user_auth.dart';
 import 'package:nearly/sign_up/controller.dart';
 import '../config/app_color.dart';
 import '../widget/button.dart';
@@ -67,8 +68,15 @@ class _SignUpState extends State<SignUp> {
                   hintText: "Enter your password",
                 ),
                 button(
-                  onTap: () {
-                    if (key.currentState!.validate()) {}
+                  onTap: () async {
+                    if (key.currentState!.validate()) {
+                      signUpAuth(
+                        context,
+                        email: controller.email.value.text,
+                        password: controller.password.value.text,
+                      );
+                    }
+
                   },
                   tMargin: 25,
                   title: "SIGN UP",
