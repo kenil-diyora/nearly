@@ -194,7 +194,7 @@ class _CompareVehicleState extends State<CompareVehicle> {
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     child: Obx(
-                      () => controller.compareVehicle.value.isNotEmpty
+                      () => controller.compareVehicle.isNotEmpty
                           ? Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -235,8 +235,8 @@ class _CompareVehicleState extends State<CompareVehicle> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  controller.vehicleOneKey
-                                                      .value[index],
+                                                  controller
+                                                      .vehicleOneKey[index],
                                                   style: const TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w700,
@@ -244,8 +244,8 @@ class _CompareVehicleState extends State<CompareVehicle> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  controller.vehicleOneFeatures
-                                                      .value[index],
+                                                  controller.vehicleOneFeatures[
+                                                      index],
                                                   style: const TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w500,
@@ -297,8 +297,8 @@ class _CompareVehicleState extends State<CompareVehicle> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  controller.vehicleTwoKey
-                                                      .value[index],
+                                                  controller
+                                                      .vehicleTwoKey[index],
                                                   style: const TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w700,
@@ -306,8 +306,8 @@ class _CompareVehicleState extends State<CompareVehicle> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  controller.vehicleTwoFeatures
-                                                      .value[index],
+                                                  controller.vehicleTwoFeatures[
+                                                      index],
                                                   style: const TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w500,

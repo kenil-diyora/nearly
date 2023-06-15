@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nearly/bottom_bar/controller.dart';
+import 'package:nearly/config/app_color.dart';
 
-class BottomBar extends StatelessWidget {
-  BottomBar({Key? key}) : super(key: key);
+class BottomBar extends StatefulWidget {
+  const BottomBar({Key? key}) : super(key: key);
 
+  @override
+  State<BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
   final BottomBarController controller = Get.put(BottomBarController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.currentIndex.value = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +29,8 @@ class BottomBar extends StatelessWidget {
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          showSelectedLabels: true,
+          selectedItemColor: ColorConst.green,
+          showSelectedLabels: false,
           showUnselectedLabels: false,
           currentIndex: controller.currentIndex.value,
           onTap: (value) {
@@ -40,6 +54,12 @@ class BottomBar extends StatelessWidget {
                 Icons.history,
               ),
               label: "History",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+              ),
+              label: "Profile",
             ),
           ],
         ),

@@ -76,12 +76,12 @@ class _SignUpState extends State<SignUp> {
                         password: controller.password.value.text,
                       );
                     }
-
                   },
                   tMargin: 25,
                   title: "SIGN UP",
                 ),
                 googleLogin(
+                  context,
                   tMargin: 15,
                 ),
                 const Divider(

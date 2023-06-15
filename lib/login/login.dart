@@ -82,6 +82,7 @@ class _LoginState extends State<Login> {
                   title: "login",
                 ),
                 googleLogin(
+                  context,
                   tMargin: 15,
                 ),
                 const Divider(

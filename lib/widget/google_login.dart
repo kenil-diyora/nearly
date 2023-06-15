@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nearly/config/user_auth.dart';
 
-Widget googleLogin({
+Widget googleLogin(
+  BuildContext context, {
   double tMargin = 0,
   double lMargin = 0,
   double rMargin = 0,
@@ -12,7 +14,9 @@ Widget googleLogin({
   double bPadding = 5,
 }) {
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      googleSigUp(context);
+    },
     child: Container(
       margin: EdgeInsets.only(
         top: tMargin,

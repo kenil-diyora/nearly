@@ -69,9 +69,17 @@ class _SelectVehicleState extends State<SelectVehicle> {
                         var res = controller.vehicle[index];
                         return GestureDetector(
                           onTap: () {
+                            // FirebaseFirestore.instance
+                            //     .collection("user")
+                            //     .doc()
+                            //     .update(
+                            //   {
+                            //     "ok": "kk",
+                            //   },
+                            // );
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (context) => BottomBar(),
+                                builder: (context) => const BottomBar(),
                               ),
                               (route) => false,
                             );

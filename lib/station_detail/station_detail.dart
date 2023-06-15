@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:nearly/charging_history/controller.dart';
 import 'package:nearly/station_detail/controller.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../config/app_color.dart';
 
 class StationDetail extends StatefulWidget {
@@ -42,27 +44,55 @@ class _StationDetailState extends State<StationDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: GestureDetector(
-        onTap: () {
-          historyController.chargingHistory.add(
-            {
-              "image":
-                  "https://static.punemirror.com/full/21b0dd30-9d36-4d52-ba39-05bbc694f1b5.jpg",
-              "station": widget.stationDetail["name"],
-              "port": widget.stationDetail["charging_port"]
-                  .toString()
-                  .replaceAll(
-                    "[",
-                    "",
-                  )
-                  .replaceAll(
-                    "]",
-                    "",
-                  ),
-              "location": widget.stationDetail["location"].toString(),
-              "charging_start": "12:51",
-              "charging_end": "1:51",
-            },
-          );
+        onTap: () async {
+          final SharedPreferences pref = await SharedPreferences.getInstance();
+          controller.currentStationName.value = widget.stationDetail["name"];
+          controller.checkIn.value = !controller.checkIn.value;
+          // if(controller.checkIn.value == false){
+          //   F
+          // }
+
+          if (controller.checkIn.value == false) {
+            String? collectionId;
+            FirebaseFirestore.instance
+                .collection("charging_history")
+                .where("uid", isEqualTo: pref.getString("uid"))
+                .get()
+                .then((value) {
+              for (var i in value.docs) {
+                collectionId = i.id;
+              }
+              FirebaseFirestore.instance
+                  .collection("charging_history")
+                  .doc(collectionId)
+                  .update({
+                "charging_end":
+                    DateFormat.yMd().add_jm().format(DateTime.now()),
+              });
+            });
+          } else {
+            FirebaseFirestore.instance.collection("charging_history").add(
+              {
+                "uid": pref.getString("uid"),
+                "image":
+                    "https://static.punemirror.com/full/21b0dd30-9d36-4d52-ba39-05bbc694f1b5.jpg",
+                "station": widget.stationDetail["name"],
+                "port": widget.stationDetail["charging_port"]
+                    .toString()
+                    .replaceAll(
+                      "[",
+                      "",
+                    )
+                    .replaceAll(
+                      "]",
+                      "",
+                    ),
+                "location": widget.stationDetail["location"].toString(),
+                "charging_start":
+                    DateFormat.yMd().add_jm().format(DateTime.now()),
+              },
+            );
+          }
         },
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -73,12 +103,19 @@ class _StationDetailState extends State<StationDetail> {
             borderRadius: BorderRadius.circular(20),
             color: ColorConst.green,
           ),
-          child: const Text(
-            "Check In",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: ColorConst.white,
+          child: Obx(
+            () => Text(
+              controller.currentStationName.isNotEmpty &&
+                      widget.stationDetail["name"] ==
+                          controller.currentStationName.value &&
+                      controller.checkIn.value == true
+                  ? "Check Out"
+                  : "Check In",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: ColorConst.white,
+              ),
             ),
           ),
         ),

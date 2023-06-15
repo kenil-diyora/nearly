@@ -15,6 +15,14 @@ class _HomeScreenState extends State<HomeScreen> {
   HomeScreenController controller = Get.put(HomeScreenController());
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.stationData.value = [];
+    controller.getStationData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -120,75 +128,92 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(
                     height: 150,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: controller.stationData.length,
-                      itemBuilder: (context, index) {
-                        var res = controller.stationData[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => StationDetail(
-                                  stationDetail: res,
+                    child: Obx(
+                      () => ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.stationData.length,
+                        itemBuilder: (context, index) {
+                          var res = controller.stationData[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => StationDetail(
+                                    stationDetail: res,
+                                  ),
                                 ),
+                              );
+                            },
+                            child: Container(
+                              width: 300,
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 10,
                               ),
-                            );
-                          },
-                          child: Container(
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              color: ColorConst.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Charging Point Details",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w300,
-                                    color: ColorConst.subTitle,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 5,
-                                    bottom: 10,
-                                  ),
-                                  child: Text(
-                                    res["name"],
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: ColorConst.title,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: ColorConst.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Charging Point Details",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                      color: ColorConst.subTitle,
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 5,
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 5,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      res["name"],
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: ColorConst.title,
+                                      ),
+                                    ),
                                   ),
-                                  child: Row(
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      bottom: 5,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.power,
+                                        ),
+                                        Text(
+                                          "  ${res["charging_port"].toString().replaceAll(
+                                                "[",
+                                                "",
+                                              ).replaceAll(
+                                                "]",
+                                                "",
+                                              )}",
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: ColorConst.title,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
                                     children: [
                                       const Icon(
-                                        Icons.power,
+                                        Icons.flash_on,
                                       ),
                                       Text(
-                                        "  ${res["charging_port"].toString().replaceAll(
-                                              "[",
-                                              "",
-                                            ).replaceAll(
-                                              "]",
-                                              "",
-                                            )}",
+                                        "  ${res["power"]}",
                                         style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -197,27 +222,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ],
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.flash_on,
-                                    ),
-                                    Text(
-                                      "  ${res["power"]}",
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: ColorConst.title,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],
