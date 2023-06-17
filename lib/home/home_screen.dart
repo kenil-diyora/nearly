@@ -142,6 +142,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 MaterialPageRoute(
                                   builder: (context) => StationDetail(
                                     stationDetail: res,
+                                    index: index,
+                                    // index: index,
                                   ),
                                 ),
                               );

@@ -48,6 +48,7 @@ class _ChargingHistoryState extends State<ChargingHistory> {
                     ? Expanded(
                         child: ListView.builder(
                           shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
                           itemCount: controller.chargingHistory.length,
                           itemBuilder: (context, index) {
                             var res = controller.chargingHistory[index];
